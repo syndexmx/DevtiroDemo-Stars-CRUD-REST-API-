@@ -26,8 +26,8 @@ public class StarController {
             @PathVariable final String designator, @RequestBody final Star star) {
         star.setDesignator(designator);
         final Star savedStar = starService.create(star);
-        final ResponseEntity<Star> response =
-                new ResponseEntity<>(star, HttpStatus.CREATED);
+        final ResponseEntity<Star> response = new ResponseEntity<Star>(savedStar,
+                HttpStatus.CREATED);
         return response;
     }
 }
