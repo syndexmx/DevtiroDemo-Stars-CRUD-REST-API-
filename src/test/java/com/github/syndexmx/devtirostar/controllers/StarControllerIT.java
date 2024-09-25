@@ -37,6 +37,13 @@ public class StarControllerIT {
     }
 
     @Test
+    public void testThatRetrieveStarReturns404WhenNotFound() throws Exception {
+        final String nonExistantStarName = "Nostar";
+        mockMvc.perform(MockMvcRequestBuilders.get("/stars/" + nonExistantStarName))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
     public void testThatStarIsCreatedJsonPathMatcher() throws Exception {
         final Star star = testStar();
         final ObjectMapper objectMapper = new ObjectMapper();
