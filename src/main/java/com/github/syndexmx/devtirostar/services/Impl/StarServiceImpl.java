@@ -7,6 +7,8 @@ import com.github.syndexmx.devtirostar.services.StarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class StarServiceImpl implements StarService {
 
@@ -24,6 +26,7 @@ public class StarServiceImpl implements StarService {
         return starEntityToStar(savedStarEntity);
     }
 
+
     private StarEntity starToStarEntity(Star star) {
         return StarEntity.builder()
                 .designator(star.getDesignator())
@@ -38,5 +41,11 @@ public class StarServiceImpl implements StarService {
                 .name(starEntity.getName())
                 .constellation(starEntity.getConstellation())
                 .build();
+    }
+
+    @Override
+    public Optional<Star> findById(String designator) {
+        final Optional<StarEntity> foundStarEntity = starRepository.findById(designator);
+        return foundStarEntity.map(star -> starEntityToStar(star));
     }
 }
