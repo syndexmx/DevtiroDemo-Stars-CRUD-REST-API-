@@ -21,7 +21,7 @@ public class StarController {
         this.starService = starService;
     }
 
-    @PutMapping(path = "/star/{designator}")
+    @PutMapping(path = "/stars/{designator}")
     public ResponseEntity<Star> createStar(
             @PathVariable final String designator, @RequestBody final Star star) {
         star.setDesignator(designator);
