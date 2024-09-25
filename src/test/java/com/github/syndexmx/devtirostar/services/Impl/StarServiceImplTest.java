@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+import static com.github.syndexmx.devtirostar.TestData.testStar;
+import static com.github.syndexmx.devtirostar.TestData.testStarEntity;
+
 @ExtendWith(MockitoExtension.class)
 public class StarServiceImplTest {
 
@@ -26,17 +29,9 @@ public class StarServiceImplTest {
 
     @Test
     public void testThatStarIsSaved() {
-        final Star star = Star.builder()
-                .designator("aAqi")
-                .name("Altair")
-                .constellation("Aquila")
-                .build();
+        final Star star = testStar();
 
-        final StarEntity starEntity = StarEntity.builder()
-                .designator("aAqi")
-                .name("Altair")
-                .constellation("Aquila")
-                .build();
+        final StarEntity starEntity = testStarEntity();
 
         when(starRepository.save(eq(starEntity))).thenReturn(starEntity);
         final Star result = underTest.create(star);
