@@ -3,6 +3,7 @@ package com.github.syndexmx.devtirostar.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.syndexmx.devtirostar.domain.Star;
+import com.github.syndexmx.devtirostar.services.StarService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class StarControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private StarService starService;
+
     @Test
     public void testThatStarIsCreated() throws Exception {
         final Star star = testStar();
@@ -34,13 +38,6 @@ public class StarControllerIT {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(starJson))
                 .andExpect(MockMvcResultMatchers.content().json(starJson));
-    }
-
-    @Test
-    public void testThatRetrieveStarReturns404WhenNotFound() throws Exception {
-        final String nonExistantStarName = "Nostar";
-        mockMvc.perform(MockMvcRequestBuilders.get("/stars/" + nonExistantStarName))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
@@ -56,4 +53,24 @@ public class StarControllerIT {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(star.getConstellation()));
     }
+
+    @Test
+    public void testThatRetrieveStarReturns404WhenNotFound() throws Exception {
+        final String nonExistantStarName = "Nostar";
+        mockMvc.perform(MockMvcRequestBuilders.get("/stars/" + nonExistantStarName))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void testThatRetrieveStarReturnsHttp200AndStarWhenExists() throws Exception {
+        final Star star = testStar();
+        starService.create(star);
+        mockMvc.perform(MockMvcRequestBuilders.get("/stars/" + star.getDesignator()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(star.getConstellation()));
+    }
+
+
 }
