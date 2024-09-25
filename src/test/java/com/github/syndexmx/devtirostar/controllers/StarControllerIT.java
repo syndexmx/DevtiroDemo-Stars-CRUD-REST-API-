@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.syndexmx.devtirostar.domain.Star;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,6 +18,7 @@ import static com.github.syndexmx.devtirostar.TestData.testStarEntity;
 @AutoConfigureMockMvc
 public class StarControllerIT {
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Test
@@ -25,7 +27,8 @@ public class StarControllerIT {
         final ObjectMapper objectMapper = new ObjectMapper();
         final String starJson = objectMapper.writeValueAsString(star);
         mockMvc.perform(MockMvcRequestBuilders.put("/stars/" + star.getDesignator())
-                    .content("application/json"))
+                    .contentType("application/json")
+                    .content(starJson))
                 .andExpect(MockMvcResultMatchers.content().json(starJson));
     }
 }

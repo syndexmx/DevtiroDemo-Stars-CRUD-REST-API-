@@ -27,16 +27,16 @@ public class StarServiceImpl implements StarService {
     private StarEntity starToStarEntity(Star star) {
         return StarEntity.builder()
                 .designator(star.getDesignator())
+                .name(star.getName())
                 .constellation(star.getConstellation())
-                .name(star.getConstellation())
                 .build();
     }
 
     private Star starEntityToStar(StarEntity starEntity) {
         return Star.builder()
                 .designator(starEntity.getDesignator())
+                .name(starEntity.getName())
                 .constellation(starEntity.getConstellation())
-                .name(starEntity.getConstellation())
                 .build();
     }
 }
