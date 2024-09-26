@@ -85,4 +85,11 @@ public class StarServiceImplTest {
         final boolean result = underTest.isStarExists(testStar());
         assertEquals(true, result);
     }
+
+    @Test
+    public void testDeleteStarDeletes () {
+        final String designator = "NonExistentDesignator";
+        underTest.deleteStarById(designator);
+        verify(starRepository, times(1)).deleteById(eq(designator));
+    }
 }

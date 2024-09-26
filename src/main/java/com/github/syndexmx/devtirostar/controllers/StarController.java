@@ -44,4 +44,10 @@ public class StarController {
     public ResponseEntity<List<Star>> listStars() {
         return new ResponseEntity<List<Star>>(starService.listStars(), HttpStatus.OK);
     }
+
+    @DeleteMapping(path = "/stars/{designator}")
+    public ResponseEntity deleteStar(@PathVariable final String designator) {
+        starService.deleteStarById(designator);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -15,4 +15,6 @@ public interface StarService {
 
     List<Star> listStars();
 
+    void deleteStarById(String designator);
+
 }

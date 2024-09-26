@@ -102,9 +102,25 @@ public class StarControllerIT {
         starService.save(star);
         mockMvc.perform(MockMvcRequestBuilders.get("/stars"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].designator").value(star.getDesignator()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value(star.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].constellation").value(star.getConstellation()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].designator")
+                        .value(star.getDesignator()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name")
+                        .value(star.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].constellation")
+                        .value(star.getConstellation()));
+    }
 
+    @Test
+    public void testDeleteReturnsHttp204WhenStarDoesntExist() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/stars/nonExistentStarDesignator"))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void testDeleteReturnsHttp204WhenStarExists() throws Exception {
+        final Star star = testStar();
+        starService.save(star);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/stars/" + star.getDesignator()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }
