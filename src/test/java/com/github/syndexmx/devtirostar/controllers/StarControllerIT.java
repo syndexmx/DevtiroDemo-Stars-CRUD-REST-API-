@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,6 +20,7 @@ import static com.github.syndexmx.devtirostar.TestData.testStar;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class StarControllerIT {
 
     @Autowired
@@ -62,7 +64,7 @@ public class StarControllerIT {
     @Test
     public void testThatRetrieveStarReturnsHttp200AndStarWhenExists() throws Exception {
         final Star star = testStar();
-        starService.create(star);
+        starService.save(star);
         mockMvc.perform(MockMvcRequestBuilders.get("/stars/" + star.getDesignator()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
@@ -80,7 +82,7 @@ public class StarControllerIT {
     @Test
     public void testThatListStarsReturnsHttp200AndListWhenStarsExist() throws Exception {
         final Star star = testStar();
-        starService.create(star);
+        starService.save(star);
         mockMvc.perform(MockMvcRequestBuilders.get("/stars"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].designator").value(star.getDesignator()))

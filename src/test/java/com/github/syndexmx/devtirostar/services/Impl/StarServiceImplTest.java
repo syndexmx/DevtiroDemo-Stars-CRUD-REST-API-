@@ -8,8 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,26 +30,26 @@ public class StarServiceImplTest {
     private StarServiceImpl underTest;
 
     @Test
-    public void testThatStarIsSaved() {
+    public void testStarIsSaved() {
         final Star star = testStar();
 
         final StarEntity starEntity = testStarEntity();
 
         when(starRepository.save(eq(starEntity))).thenReturn(starEntity);
-        final Star result = underTest.create(star);
+        final Star result = underTest.save(star);
         assertEquals(star, result);
     }
 
     @Test
-    public void testThatFindByIdReturnsEmptyWhenNoStar() {
-        final String nonExistantStarName = "Nostar";
-        when(starRepository.findById(eq(nonExistantStarName))).thenReturn(Optional.empty());
-        final Optional<Star> result = underTest.findById(nonExistantStarName);
+    public void testFindByIdReturnsEmptyWhenNoStar() {
+        final String nonExistentStarName = "Nostar";
+        when(starRepository.findById(eq(nonExistentStarName))).thenReturn(Optional.empty());
+        final Optional<Star> result = underTest.findById(nonExistentStarName);
         assertEquals(Optional.empty(), result);
     }
 
     @Test
-    public void testThatFindByIdReturnsStarWhenExists() {
+    public void testFindByIdReturnsStarWhenExists() {
         final Star star = testStar();
         final StarEntity starEntity = testStarEntity();
         when(starRepository.findById(eq(star.getDesignator()))).thenReturn(Optional.of(starEntity));
@@ -60,17 +58,31 @@ public class StarServiceImplTest {
     }
 
     @Test
-    public void testThatListStarsReturnsEmptyListWhenNoStarsExists() {
+    public void testListStarsReturnsEmptyListWhenNoStarsExists() {
         when(starRepository.findAll()).thenReturn(new ArrayList<StarEntity>());
         final List<Star> result = underTest.listStars();
         assertEquals(0, result.size());
     }
 
     @Test
-    public void testThatListStarsReturnsListWhenStarsExist() {
+    public void testListStarsReturnsListWhenStarsExist() {
         final StarEntity starEntity = testStarEntity();
         when(starRepository.findAll()).thenReturn(List.of(starEntity));
         final List<Star> result = underTest.listStars();
         assertEquals(1, result.size());
+    }
+
+    @Test
+    public void testIsStarExistsReturnsFalseWhenStarDoesntExist() {
+        when(starRepository.existsById(any())).thenReturn(false);
+        final boolean result = underTest.isStarExists(testStar());
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void testIsStarExistsReturnsTrueWhenStarDoesExist() {
+        when(starRepository.existsById(testStar().getDesignator())).thenReturn(true);
+        final boolean result = underTest.isStarExists(testStar());
+        assertEquals(true, result);
     }
 }

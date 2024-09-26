@@ -1,12 +1,10 @@
 package com.github.syndexmx.devtirostar.controllers;
 
 import com.github.syndexmx.devtirostar.domain.Star;
-import com.github.syndexmx.devtirostar.domain.StarEntity;
 import com.github.syndexmx.devtirostar.services.StarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,13 +21,16 @@ public class StarController {
     }
 
     @PutMapping(path = "/stars/{designator}")
-    public ResponseEntity<Star> createStar(
+    public ResponseEntity<Star> createUpdateStar(
             @PathVariable final String designator, @RequestBody final Star star) {
         star.setDesignator(designator);
-        final Star savedStar = starService.create(star);
-        final ResponseEntity<Star> response = new ResponseEntity<Star>(savedStar,
-                HttpStatus.CREATED);
-        return response;
+        final boolean isStarExists = starService.isStarExists(star);
+        final Star savedStar = starService.save(star);
+        if (isStarExists) {
+            return new ResponseEntity<Star>(savedStar, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Star>(savedStar, HttpStatus.CREATED);
+        }
     }
 
     @GetMapping(path = "/stars/{designator}")

@@ -21,7 +21,12 @@ public class StarServiceImpl implements StarService {
     }
 
     @Override
-    public Star create(final Star star) {
+    public boolean isStarExists(Star star) {
+        return starRepository.existsById(star.getDesignator());
+    }
+
+    @Override
+    public Star save(final Star star) {
         final StarEntity starEntity = starToStarEntity(star);
         final StarEntity savedStarEntity = starRepository.save(starEntity);
         return starEntityToStar(savedStarEntity);
