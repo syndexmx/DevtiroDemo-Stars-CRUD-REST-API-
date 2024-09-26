@@ -41,7 +41,7 @@ public class StarControllerIT {
     }
 
     @Test
-    public void testThatStarIsCreatedJsonPathMatcher() throws Exception {
+    public void testThatStarIsUpdatedReturnsHttp200() throws Exception {
         final Star star = testStar();
         final ObjectMapper objectMapper = new ObjectMapper();
         final String starJson = objectMapper.writeValueAsString(star);
@@ -52,6 +52,23 @@ public class StarControllerIT {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(star.getConstellation()));
+    }
+
+    @Test
+    public void testThatStarIsUpdatedReturnsHttp201() throws Exception {
+        final Star star = testStar();
+        starService.save(star);
+        final String CORRECTED_CONSTELLATION_NAME = "Sagittarius";
+        star.setConstellation(CORRECTED_CONSTELLATION_NAME);
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final String starJson = objectMapper.writeValueAsString(star);
+        mockMvc.perform(MockMvcRequestBuilders.put("/stars/" + star.getDesignator())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(starJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(CORRECTED_CONSTELLATION_NAME));
     }
 
     @Test
