@@ -7,6 +7,7 @@ import com.github.syndexmx.devtirostar.services.StarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,12 @@ public class StarServiceImpl implements StarService {
     @Override
     public Optional<Star> findById(String designator) {
         final Optional<StarEntity> foundStarEntity = starRepository.findById(designator);
-        return foundStarEntity.map(star -> starEntityToStar(star));
+        return foundStarEntity.map(starEntity -> starEntityToStar(starEntity));
+    }
+
+    @Override
+    public List<Star> listStars() {
+        final List<StarEntity> foundStars = starRepository.findAll();
+        return foundStars.stream().map(starEntity -> starEntityToStar(starEntity)).toList();
     }
 }

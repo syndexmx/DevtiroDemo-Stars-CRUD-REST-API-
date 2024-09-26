@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,4 +59,18 @@ public class StarServiceImplTest {
         assertEquals(Optional.of(star), result);
     }
 
+    @Test
+    public void testThatListStarsReturnsEmptyListWhenNoStarsExists() {
+        when(starRepository.findAll()).thenReturn(new ArrayList<StarEntity>());
+        final List<Star> result = underTest.listStars();
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    public void testThatListStarsReturnsListWhenStarsExist() {
+        final StarEntity starEntity = testStarEntity();
+        when(starRepository.findAll()).thenReturn(List.of(starEntity));
+        final List<Star> result = underTest.listStars();
+        assertEquals(1, result.size());
+    }
 }

@@ -1,6 +1,5 @@
 package com.github.syndexmx.devtirostar.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.syndexmx.devtirostar.domain.Star;
 import com.github.syndexmx.devtirostar.services.StarService;
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static com.github.syndexmx.devtirostar.TestData.testStar;
-import static com.github.syndexmx.devtirostar.TestData.testStarEntity;
 
 @SpringBootTest
 @AutoConfigureMockMvc
