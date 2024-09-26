@@ -70,5 +70,22 @@ public class StarControllerIT {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(star.getConstellation()));
     }
 
+    @Test
+    public void testThatListStarsReturnsHttp200EmptyListWhenNoStarsExists() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/stars"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("[]"));
+    }
 
+    @Test
+    public void testThatListStarsReturnsHttp200AndListWhenStarsExist() throws Exception {
+        final Star star = testStar();
+        starService.create(star);
+        mockMvc.perform(MockMvcRequestBuilders.get("/stars"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].designator").value(star.getDesignator()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name").value(star.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].constellation").value(star.getConstellation()));
+
+    }
 }

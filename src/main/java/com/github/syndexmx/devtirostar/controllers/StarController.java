@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,5 +37,10 @@ public class StarController {
         final Optional<Star> foundStar = starService.findById(designator);
         return foundStar.map(star -> new ResponseEntity<Star>(star, HttpStatus.OK))
                 .orElse(new ResponseEntity<Star>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping(path = "/stars")
+    public ResponseEntity<List<Star>> listStars() {
+        return new ResponseEntity<List<Star>>(starService.listStars(), HttpStatus.OK);
     }
 }
