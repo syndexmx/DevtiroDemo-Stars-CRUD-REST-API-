@@ -11,7 +11,8 @@ public final class TestData {
         return Star.builder()
                 .designator("aAqi")
                 .name("Altair")
-                .constellation("Aquila")
+                .inConstellation("Aqu")
+                .type("A7V")
                 .build();
     }
 
@@ -19,7 +20,8 @@ public final class TestData {
         return StarEntity.builder()
                 .designator("aAqi")
                 .name("Altair")
-                .constellation("Aquila")
+                .inConstellation("Aqu")
+                .type("A7V")
                 .build();
     }
 }

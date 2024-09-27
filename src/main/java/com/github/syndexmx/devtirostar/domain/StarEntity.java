@@ -1,5 +1,6 @@
 package com.github.syndexmx.devtirostar.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -17,11 +18,17 @@ import lombok.NoArgsConstructor;
 public class StarEntity {
 
     @Id
+    @Column(name = "star_id", length = 12)
     private String designator;
 
-    private String constellation;
+    @Column(name = "constellation_id", length = 12)
+    private String inConstellation;
 
+    @Column(name = "star_name", length = 20)
     private String name;
+
+    @Column(name = "star_type", length = 8)
+    private String type;
 
 
 }

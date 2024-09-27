@@ -40,7 +40,8 @@ public class StarServiceImpl implements StarService {
         return StarEntity.builder()
                 .designator(star.getDesignator())
                 .name(star.getName())
-                .constellation(star.getConstellation())
+                .inConstellation(star.getInConstellation())
+                .type(star.getType())
                 .build();
     }
 
@@ -48,7 +49,8 @@ public class StarServiceImpl implements StarService {
         return Star.builder()
                 .designator(starEntity.getDesignator())
                 .name(starEntity.getName())
-                .constellation(starEntity.getConstellation())
+                .inConstellation(starEntity.getInConstellation())
+                .type(starEntity.getType())
                 .build();
     }
 

@@ -13,8 +13,10 @@ public class Star {
 
     private String designator;
 
-    private String constellation;
+    private String inConstellation;
 
     private String name;
+
+    private String type;
 
 }
