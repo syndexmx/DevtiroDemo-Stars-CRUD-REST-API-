@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class StarTest {
 
     @Test
-    public void testThatBuilderIsWorking() {
+    public void testThatStarBuilderIsWorking() {
         Star star = Star.builder()
                 .designator("aVir")
                 .inConstellation("Virgo")

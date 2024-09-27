@@ -9,18 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Star {
+public class Constellation {
 
     private String designator;
 
-    private String inConstellation;
-
     private String name;
 
-    private String type;
+    private String genitive;
 
-    private double distance;
-
-    private double weight;
 
 }
