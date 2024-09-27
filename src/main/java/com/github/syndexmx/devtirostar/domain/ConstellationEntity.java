@@ -14,26 +14,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "stars")
-public class StarEntity {
+@Table(name = "constellations")
+public class ConstellationEntity {
 
     @Id
-    @Column(name = "star_id", length = 12)
+    @Column(name = "constellation_id", length = 6)
     private String designator;
 
-    @Column(name = "constellation_id", length = 6)
-    private String inConstellation;
-
-    @Column(name = "star_name", length = 20)
+    @Column(name = "constellation_name", length = 20)
     private String name;
 
-    @Column(name = "star_type", length = 8)
-    private String type;
-
-    @Column(name = "distance_ly")
-    private double distance;
-
-    @Column(name = "weight_sw")
-    private double weight;
+    @Column(name = "constellation_gen", length = 20)
+    private String genitive;
 
 }

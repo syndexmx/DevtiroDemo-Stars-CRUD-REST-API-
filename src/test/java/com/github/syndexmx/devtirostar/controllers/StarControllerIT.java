@@ -75,8 +75,8 @@ public class StarControllerIT {
 
     @Test
     public void testThatRetrieveStarReturns404WhenNotFound() throws Exception {
-        final String nonExistantStarName = "Nostar";
-        mockMvc.perform(MockMvcRequestBuilders.get("/stars/" + nonExistantStarName))
+        final String nonExistentStarName = "Nostar";
+        mockMvc.perform(MockMvcRequestBuilders.get("/stars/" + nonExistentStarName))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 

@@ -35,7 +35,6 @@ public class StarServiceImpl implements StarService {
         return starEntityToStar(savedStarEntity);
     }
 
-
     private StarEntity starToStarEntity(Star star) {
         return StarEntity.builder()
                 .designator(star.getDesignator())
