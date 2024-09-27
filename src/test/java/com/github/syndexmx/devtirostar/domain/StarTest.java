@@ -1,7 +1,7 @@
 package com.github.syndexmx.devtirostar.domain;
 
 import org.junit.jupiter.api.Test;
-import static com.github.syndexmx.devtirostar.TestData.testStar;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StarTest {
@@ -10,11 +10,13 @@ public class StarTest {
     public void testThatBuilderIsWorking() {
         Star star = Star.builder()
                 .designator("aVir")
-                .constellation("Virgo")
+                .inConstellation("Virgo")
                 .name("Spica")
+                .type("B1AE4")
                 .build();
         assertEquals(star.getDesignator(), "aVir");
-        assertEquals(star.getConstellation(), "Virgo");
+        assertEquals(star.getInConstellation(), "Virgo");
         assertEquals(star.getName(), "Spica");
+        assertEquals(star.getType(), "B1AE4");
     }
 }

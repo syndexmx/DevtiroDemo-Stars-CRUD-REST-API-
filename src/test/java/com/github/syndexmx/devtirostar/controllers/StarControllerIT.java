@@ -51,7 +51,8 @@ public class StarControllerIT {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(star.getConstellation()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.inConstellation").value(star.getInConstellation()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value(star.getType()));
     }
 
     @Test
@@ -59,7 +60,7 @@ public class StarControllerIT {
         final Star star = testStar();
         starService.save(star);
         final String CORRECTED_CONSTELLATION_NAME = "Sagittarius";
-        star.setConstellation(CORRECTED_CONSTELLATION_NAME);
+        star.setInConstellation(CORRECTED_CONSTELLATION_NAME);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String starJson = objectMapper.writeValueAsString(star);
         mockMvc.perform(MockMvcRequestBuilders.put("/stars/" + star.getDesignator())
@@ -68,7 +69,8 @@ public class StarControllerIT {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(CORRECTED_CONSTELLATION_NAME));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.inConstellation").value(CORRECTED_CONSTELLATION_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value(star.getType()));
     }
 
     @Test
@@ -86,7 +88,8 @@ public class StarControllerIT {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.constellation").value(star.getConstellation()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.inConstellation").value(star.getInConstellation()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.type").value(star.getType()));
     }
 
     @Test
@@ -106,8 +109,10 @@ public class StarControllerIT {
                         .value(star.getDesignator()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].name")
                         .value(star.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].constellation")
-                        .value(star.getConstellation()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].inConstellation")
+                        .value(star.getInConstellation()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].type")
+                        .value(star.getType()));
     }
 
     @Test
