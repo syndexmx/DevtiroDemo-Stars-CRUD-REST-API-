@@ -24,7 +24,7 @@ public final class TestData {
         return StarEntity.builder()
                 .designator("aAqi")
                 .name("Altair")
-                .inConstellation("Aqu")
+                .inConstellation(testConstellationEntity())
                 .type("A7V")
                 .distance(17.0f)
                 .weight(18.0f)
