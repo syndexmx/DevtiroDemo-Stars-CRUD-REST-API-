@@ -42,6 +42,8 @@ public class StarServiceImpl implements StarService {
                 .name(star.getName())
                 .inConstellation(star.getInConstellation())
                 .type(star.getType())
+                .weight(star.getWeight())
+                .distance(star.getDistance())
                 .build();
     }
 
@@ -51,6 +53,8 @@ public class StarServiceImpl implements StarService {
                 .name(starEntity.getName())
                 .inConstellation(starEntity.getInConstellation())
                 .type(starEntity.getType())
+                .weight(starEntity.getWeight())
+                .distance(starEntity.getDistance())
                 .build();
     }
 

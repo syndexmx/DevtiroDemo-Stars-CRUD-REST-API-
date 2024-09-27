@@ -1,5 +1,6 @@
 package com.github.syndexmx.devtirostar.domain;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +19,9 @@ public class Star {
     private String name;
 
     private String type;
+
+    private double distance;
+
+    private double weight;
 
 }

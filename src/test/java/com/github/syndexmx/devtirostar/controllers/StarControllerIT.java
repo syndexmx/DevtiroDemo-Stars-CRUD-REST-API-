@@ -59,8 +59,8 @@ public class StarControllerIT {
     public void testThatStarIsUpdatedReturnsHttp201() throws Exception {
         final Star star = testStar();
         starService.save(star);
-        final String CORRECTED_CONSTELLATION_NAME = "Sagittarius";
-        star.setInConstellation(CORRECTED_CONSTELLATION_NAME);
+        final String CORRECTED_CONSTELLATION_ID = "Sag";
+        star.setInConstellation(CORRECTED_CONSTELLATION_ID);
         final ObjectMapper objectMapper = new ObjectMapper();
         final String starJson = objectMapper.writeValueAsString(star);
         mockMvc.perform(MockMvcRequestBuilders.put("/stars/" + star.getDesignator())
@@ -69,7 +69,7 @@ public class StarControllerIT {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.designator").value(star.getDesignator()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(star.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.inConstellation").value(CORRECTED_CONSTELLATION_NAME))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.inConstellation").value(CORRECTED_CONSTELLATION_ID))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.type").value(star.getType()));
     }
 
