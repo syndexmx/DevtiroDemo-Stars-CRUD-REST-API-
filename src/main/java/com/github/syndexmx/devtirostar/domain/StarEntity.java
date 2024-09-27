@@ -30,5 +30,10 @@ public class StarEntity {
     @Column(name = "star_type", length = 8)
     private String type;
 
+    @Column(name = "distance_ly")
+    private double distance;
+
+    @Column(name = "weight_sw")
+    private double weight;
 
 }
