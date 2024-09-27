@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -76,14 +76,14 @@ public class StarServiceImplTest {
     public void testIsStarExistsReturnsFalseWhenStarDoesntExist() {
         when(starRepository.existsById(any())).thenReturn(false);
         final boolean result = underTest.isStarExists(testStar());
-        assertEquals(false, result);
+        assertFalse(result);
     }
 
     @Test
     public void testIsStarExistsReturnsTrueWhenStarDoesExist() {
         when(starRepository.existsById(testStar().getDesignator())).thenReturn(true);
         final boolean result = underTest.isStarExists(testStar());
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test

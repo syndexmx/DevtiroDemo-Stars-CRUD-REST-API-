@@ -2,6 +2,7 @@ package com.github.syndexmx.devtirostar.services.Impl;
 
 import com.github.syndexmx.devtirostar.domain.Star;
 import com.github.syndexmx.devtirostar.domain.StarEntity;
+import com.github.syndexmx.devtirostar.repositories.ConstellationRepository;
 import com.github.syndexmx.devtirostar.repositories.StarRepository;
 import com.github.syndexmx.devtirostar.services.StarService;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,13 @@ public class StarServiceImpl implements StarService {
     private final StarRepository starRepository;
 
     @Autowired
-    public StarServiceImpl(final StarRepository starRepository) {
+    private final ConstellationRepository constellationRepository;
+
+    @Autowired
+    public StarServiceImpl(final StarRepository starRepository,
+                           ConstellationRepository constellationRepository) {
         this.starRepository = starRepository;
+        this.constellationRepository = constellationRepository;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class StarServiceImpl implements StarService {
         return StarEntity.builder()
                 .designator(star.getDesignator())
                 .name(star.getName())
-                .inConstellation(star.getInConstellation())
+                .inConstellation(constellationRepository.findById(star.getInConstellation()).get())
                 .type(star.getType())
                 .weight(star.getWeight())
                 .distance(star.getDistance())
@@ -50,7 +56,7 @@ public class StarServiceImpl implements StarService {
         return Star.builder()
                 .designator(starEntity.getDesignator())
                 .name(starEntity.getName())
-                .inConstellation(starEntity.getInConstellation())
+                .inConstellation(starEntity.getInConstellationId())
                 .type(starEntity.getType())
                 .weight(starEntity.getWeight())
                 .distance(starEntity.getDistance())

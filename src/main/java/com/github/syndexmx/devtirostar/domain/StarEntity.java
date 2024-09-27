@@ -1,9 +1,6 @@
 package com.github.syndexmx.devtirostar.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +18,9 @@ public class StarEntity {
     @Column(name = "star_id", length = 12)
     private String designator;
 
-    @Column(name = "constellation_id", length = 6)
-    private String inConstellation;
+    @ManyToOne
+    @JoinColumn(name = "constellation_id")
+    private ConstellationEntity inConstellation;
 
     @Column(name = "star_name", length = 20)
     private String name;
@@ -35,5 +33,10 @@ public class StarEntity {
 
     @Column(name = "weight_sw")
     private double weight;
+
+    public String getInConstellationId() {
+        return inConstellation.getName();
+    }
+
 
 }
